@@ -6,6 +6,7 @@
     <title>Product Return Form</title>
 </head>
 <body>
+    <h1>Sorry it didn't work out</h1>
     <div id="container" class="main-content">
         <form class="order-number-form">
             <label for="">Order Number:</label>
@@ -21,18 +22,26 @@
     </div>
 
     <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="return_form.js"></script>
+    <script type="text/javascript" src="order.js"></script>
     <script type="text/javascript">
-        var return_form = new ReturnForm();
-
         var renderReturnOptions = function(options) {
-            console.log(options);
             // assume the order is in a state that allows it to be returned
-            // todo: when it's not returnable explain and give a short explanation why
-            // todo: determine a better solution for writing to the dom (e.g. templating library, react)
-            $('.order-options').text(options.return_status).addClass('show');
+            // todo: when it's not returnable explain and give a short explanation why and a way to contact us with questions
+
+            if (options.return_status === order.order_state.returnable) {
+                var html_in_js = '';
+
+                // todo: determine a better solution for writing to the dom (e.g. templating library, react)
+                html_in_js
+                    += "<h2>You're almost there!</h2>"
+                    + "<p>Just print out this form, slap it on a box, gingerly put your Product in it, and send it back to us:</p>"
+                    + "<h1>" + options.order_number + " return form. Imagine a barcode</h1>"
+                    + "<p><small>legal things</small></p>";
+                $('.order-options').html(html_in_js).addClass('show');
+            }
         };
 
+        var order = new Order();
     	$(document).ready(function() {
             $('.help-link').on('click', function(event) {
                 event.preventDefault();
@@ -48,7 +57,7 @@
                     return;
                 }
 
-                return_form.getReturnOptions(order_number).done(renderReturnOptions);
+                order.getReturnOptions(order_number).done(renderReturnOptions);
             });
     	});
     </script>
