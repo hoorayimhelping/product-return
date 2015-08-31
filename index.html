@@ -7,16 +7,49 @@
 </head>
 <body>
     <div id="container" class="main-content">
-    	<form>
-    		<label for="">Order Number:</label><span class="help">?</span>
+        <form class="order-number-form">
+            <label for="">Order Number:</label>
+            <span class="help">
+                <!-- todo: add a tooltip here showing the customer where their order number is -->
+                <a href="#" title="Where can I find my Order Number?" class="help-link">?</a>
+            </span>
     		<input type="text" placeholder="Enter Your Order Number">
+            <input type="submit" value="See my return options">
     	</form>
+
+        <div class="order-options"></div>
     </div>
 
     <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="return_form.js"></script>
     <script type="text/javascript">
+        var return_form = new ReturnForm();
+
+        var renderReturnOptions = function(options) {
+            console.log(options);
+            // assume the order is in a state that allows it to be returned
+            // todo: when it's not returnable explain and give a short explanation why
+            // todo: determine a better solution for writing to the dom (e.g. templating library, react)
+            $('.order-options').text(options.return_status).addClass('show');
+        };
+
     	$(document).ready(function() {
-    		console.log('hello, world');
+            $('.help-link').on('click', function(event) {
+                event.preventDefault();
+            });
+
+            $('.order-number-form').on('submit', function(event) {
+                event.preventDefault();
+                var order_number = $(this).find('input[type="text"]').val();
+
+                if ($.trim(order_number) === '') {
+                    // todo: add usable validation here with friendly help messages
+                    $(this).addClass('validation-error');
+                    return;
+                }
+
+                return_form.getReturnOptions(order_number).done(renderReturnOptions);
+            });
     	});
     </script>
 </body>
