@@ -2,7 +2,7 @@
 
 A simple product return form.
 
-It's mostly a skeleton of a product form with comments explaining the stubbed out functionality.
+It's mostly a skeleton of a product form with code comments explaining the stubbed out functionality. The idea is the user enters their order number (or product or serial number, ideally into a form that can figure it out for them), then they're presented with their options on what to do. I've assumed that some orders may not be returnable, but haven't implemented that case.
 
 In the spirit of keeping this around an hour in length, I just downloaded a minified version of jQuery. In the wild I'd probably use npm and gulp to manage dependencies and automate the js build with tests. In the wild design of the page would ideally drive the tech used (e.g. a single page app might be better with react and ember, whereas a simple form might be better with just some jQuery and vanilla JavaScript), but since I'm fastest with jQuery, I figured I'd use that and keep it simple.
 
